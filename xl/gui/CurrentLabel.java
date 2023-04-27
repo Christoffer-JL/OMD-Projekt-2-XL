@@ -5,6 +5,6 @@ import java.awt.Color;
 public class CurrentLabel extends ColoredLabel {
 
     public CurrentLabel() {
-        super("A1", Color.WHITE);
+        super("A1", Color.black);
     }
 }

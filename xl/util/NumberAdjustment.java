@@ -7,7 +7,8 @@ package xl.util;
  * @version 0.1
  */
 /**
- * Adjustment is a class for adjusting string representations of numerical values within a String.
+ * Adjustment is a class for adjusting string representations of numerical
+ * values within a String.
  */
 public class NumberAdjustment extends Adjustment {
 
@@ -18,8 +19,9 @@ public class NumberAdjustment extends Adjustment {
     /**
      * Creates an adjustment for numbers.
      *
-     * @param width is the number of positions for the result. If the width is insufficient extra
-     *     positions are added.
+     * @param width    is the number of positions for the result. If the width is
+     *                 insufficient extra
+     *                 positions are added.
      * @param decimals is the number of decimals in the result.
      */
     public NumberAdjustment(int width, int decimals) {
@@ -30,11 +32,13 @@ public class NumberAdjustment extends Adjustment {
     /**
      * Creates an adjustment for numbers with an exponent field.
      *
-     * @param width is the number of positions for the result. If the width is insufficient extra
-     *     positions are added.
+     * @param width    is the number of positions for the result. If the width is
+     *                 insufficient extra
+     *                 positions are added.
      * @param decimals is the number of positions for the decimals.
-     * @param exponent is the number of positions for the exponent including the letter E. If the
-     *     width is unsufficient extra positions are added.
+     * @param exponent is the number of positions for the exponent including the
+     *                 letter E. If the
+     *                 width is unsufficient extra positions are added.
      */
     public NumberAdjustment(int width, int decimals, int exponent) {
         this(width, decimals);
@@ -86,7 +90,8 @@ public class NumberAdjustment extends Adjustment {
             builder.append('-');
         }
         if (exponent > 0) {
-            if (number == 0.0) return right(format(0.0) + "E" + fillZero(0));
+            if (number == 0.0)
+                return right(format(0.0) + "E" + fillZero(0));
             int exp = (int) Math.floor((Math.log(number) / log10));
             number /= Math.pow(10.0, exp);
             number += 0.5 * Math.pow(10.0, -decimals);

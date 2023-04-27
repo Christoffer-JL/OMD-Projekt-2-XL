@@ -6,7 +6,10 @@ import static java.awt.BorderLayout.SOUTH;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import jdk.jshell.execution.Util;
 import xl.gui.menu.XLMenuBar;
+import xl.util.Adjustment;
 
 public class XL extends JFrame {
 
@@ -45,5 +48,8 @@ public class XL extends JFrame {
 
     public static void main(String[] args) {
         new XL(new XLList(), new XLCounter());
+        Adjustment ad = new Adjustment(20);
+        String s = ad.center("SO    UTH     ");
+        System.out.println(s);
     }
 }
