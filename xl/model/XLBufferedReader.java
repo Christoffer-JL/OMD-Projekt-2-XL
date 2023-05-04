@@ -1,9 +1,11 @@
-package xl.util;
+package xl.model;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Map;
+
+import xl.util.XLException;
 
 // TODO move to another package
 public class XLBufferedReader extends BufferedReader {

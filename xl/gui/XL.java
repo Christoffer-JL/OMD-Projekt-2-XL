@@ -47,6 +47,7 @@ public class XL extends JFrame {
     }
 
     public static void main(String[] args) {
+        // Skapa grid
         new XL(new XLList(), new XLCounter());
         Adjustment ad = new Adjustment(20);
         String s = ad.center("SO    UTH     ");

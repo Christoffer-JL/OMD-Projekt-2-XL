@@ -3,9 +3,12 @@ package xl.gui;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.swing.SwingConstants;
 
-public class SlotLabels extends GridPanel {
+public class SlotLabels extends GridPanel implements Observer {
 
     private List<SlotLabel> labelList;
 
@@ -25,4 +28,12 @@ public class SlotLabels extends GridPanel {
         SlotLabel firstLabel = labelList.get(0);
         firstLabel.setBackground(Color.YELLOW);
     }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        // TODO Auto-generated method stub
+    }
+
+    // Metod för uppdatering av gul-highlight
+    // Kolla mouse click-event
 }
