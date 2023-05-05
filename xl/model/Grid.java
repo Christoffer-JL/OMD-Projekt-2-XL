@@ -6,7 +6,7 @@ import java.util.Observer;
 
 public class Grid extends Observable {
 
-    public Grid(int row, int col) {
+    public Grid() {
 
     }
 
