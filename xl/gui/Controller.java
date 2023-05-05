@@ -1,6 +1,11 @@
 package xl.gui;
 
-public class Controller {
+import java.awt.Color;
+import java.util.Observable;
+
+public class Controller extends Observable {
+
+    private SlotLabel currentLabel;
 
     public Controller() {
 
@@ -18,7 +23,14 @@ public class Controller {
 
     }
 
-    public void changeFocus() {
+    public void changeFocus(SlotLabel label, String address) {
+        if (currentLabel != null)
+            currentLabel.setBackground(Color.WHITE);
+        currentLabel = label;
+        currentLabel.setBackground(Color.YELLOW);
+
+        setChanged();
+        notifyObservers(address);
 
     }
 

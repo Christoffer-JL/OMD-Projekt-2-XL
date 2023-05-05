@@ -8,8 +8,11 @@ import javax.swing.JTextField;
 
 public class Editor extends JTextField implements Observer {
 
-    public Editor() {
+    private Controller c;
+
+    public Editor(Controller c) {
         setBackground(Color.WHITE);
+        this.c = c;
     }
 
     public void update() {

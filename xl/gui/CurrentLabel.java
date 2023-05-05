@@ -6,19 +6,17 @@ import java.util.Observer;
 
 public class CurrentLabel extends ColoredLabel implements Observer {
 
-    private String label = "A1";
-
     public CurrentLabel() {
-        super("A1", Color.black);
-    }
-
-    public void update() {
-        // TODO - Ska uppdatera labelvärdet
+        super("A1", Color.YELLOW);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        // TODO Auto-generated method stub
+        if (!(arg instanceof String))
+            return;
+
+        setText((String) arg);
+        System.out.print("Test");
     }
 
 }

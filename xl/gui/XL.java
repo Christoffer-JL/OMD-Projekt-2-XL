@@ -4,6 +4,7 @@ import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.NORTH;
 import static java.awt.BorderLayout.SOUTH;
 
+import javax.sound.sampled.Control;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -15,7 +16,8 @@ public class XL extends JFrame {
 
     private static final int ROWS = 10, COLUMNS = 8;
     private XLCounter counter;
-    private StatusLabel statusLabel = new StatusLabel();
+    private Controller c;
+    private StatusLabel statusLabel = new StatusLabel(c);
     private XLList xlList;
 
     public XL(XL oldXL) {
@@ -28,9 +30,10 @@ public class XL extends JFrame {
         this.counter = counter;
         xlList.add(this);
         counter.increment();
-        JPanel statusPanel = new StatusPanel(statusLabel);
-        JPanel sheetPanel = new SheetPanel(ROWS, COLUMNS);
-        Editor editor = new Editor();
+        c = new Controller();
+        JPanel statusPanel = new StatusPanel(statusLabel, c);
+        JPanel sheetPanel = new SheetPanel(ROWS, COLUMNS, c);
+        Editor editor = new Editor(c);
         add(NORTH, statusPanel);
         add(CENTER, editor);
         add(SOUTH, sheetPanel);
