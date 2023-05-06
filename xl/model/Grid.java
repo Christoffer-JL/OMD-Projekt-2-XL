@@ -15,11 +15,19 @@ import xl.expr.Environment;
 public class Grid extends Observable implements Environment{
 
 		private Map<String, Cell> grid;
+		private CellFactory fact = new CellFactory();
 		
 		
-		
-	    public Grid() {
+	    public Grid() throws IOException {
 	    grid=new HashMap<String, Cell>();
+		fact = new CellFactory();
+
+		for (char c = 'A'; c <= 'H'; c++) {
+            for (int i = 1; i <= 10; i++) {
+                grid.put("" + c + i, fact.buildCell("0"));
+            }
+        }
+
 	  }
 
 	   
@@ -68,12 +76,20 @@ public class Grid extends Observable implements Environment{
 	    
 	    public void newFormula(String cellAddress, String newFormula) {
 
-	    	//temp code för testning
-			CellFactory fact = new CellFactory();
+			Cell tempCell = grid.get(cellAddress);
+			
+
 			try {
-				grid.put(cellAddress, fact.buildCell(newFormula)) ;
+				
+				grid.put(cellAddress, new BombCell());
+				Cell newCell = fact.buildCell(newFormula);
+			System.out.println(	newCell.getValue(this));
+				grid.put(cellAddress, newCell);
+				System.out.println("test pass");
+
+
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				grid.put(cellAddress, tempCell);
 				e.printStackTrace();
 			}
 	    	

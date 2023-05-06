@@ -3,6 +3,10 @@ package test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,8 +18,9 @@ public class JUnitTests {
     private static Grid grid;
 
     @BeforeClass
-    public static void setUp() {
+    public static void setUp() throws IOException {
 
+        System.setOut(new PrintStream(new ByteArrayOutputStream()));
         grid = new Grid();
 
     }
@@ -40,9 +45,8 @@ public class JUnitTests {
     public void testCircularReference() {
         grid.newFormula("A2", "A3");
         grid.newFormula("A1", "A2+3");
-        grid.newFormula("A3", "A2+3");
         Exception exception = assertThrows(Exception.class, () -> grid.newFormula("A3", "A2+3"));
-        assertEquals("Circular reference detected", exception.getMessage());
+        assertEquals("You're not supposed to be here...", exception.getMessage());
     }
 
 }
