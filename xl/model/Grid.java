@@ -77,20 +77,18 @@ public class Grid extends Observable implements Environment{
 	    public void newFormula(String cellAddress, String newFormula) {
 
 			Cell tempCell = grid.get(cellAddress);
-			
 
 			try {
 				
 				grid.put(cellAddress, new BombCell());
 				Cell newCell = fact.buildCell(newFormula);
-			System.out.println(	newCell.getValue(this));
+				newCell.getValue(this); // Ta ej bort detta (Det ser dumt ut men fungerar)
 				grid.put(cellAddress, newCell);
-				System.out.println("test pass");
 
 
 			} catch (IOException e) {
 				grid.put(cellAddress, tempCell);
-				e.printStackTrace();
+				// Skicka felet vidare till GUIn sen...
 			}
 	    	
 	    	
