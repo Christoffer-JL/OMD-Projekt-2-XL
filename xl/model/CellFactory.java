@@ -10,7 +10,7 @@ public class CellFactory {
         if (str.startsWith("#")) {
             return new CommentCell(str);
         } else {
-            return new ExprCell(new ExprParser().build(str));
+            return new ExprCell(str);
         }
     }
 

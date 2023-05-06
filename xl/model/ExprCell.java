@@ -10,7 +10,7 @@ public class ExprCell implements Cell {
 
     private Expr expr;
 
-    public ExprCell(Environment env, String expr) {
+    public ExprCell(String expr) {
 
         ExprParser parser = new ExprParser();
 
@@ -19,8 +19,6 @@ public class ExprCell implements Cell {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override

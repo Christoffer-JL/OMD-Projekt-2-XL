@@ -68,7 +68,7 @@ public class Grid extends Observable implements Environment{
 	    public void newFormula(String cellAddress, String newFormula) {
 
 	    	//temp code för testning
-			ExprCell newCell = new ExprCell(this, newFormula);
+			ExprCell newCell = new ExprCell(newFormula);
 			grid.put(cellAddress, newCell);
 	    	
 	    	
