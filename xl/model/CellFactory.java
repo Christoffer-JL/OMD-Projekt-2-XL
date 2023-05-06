@@ -6,7 +6,7 @@ import xl.expr.*;
 
 public class CellFactory {
 
-    public Cell CellFactory(String str) throws IOException {
+    public Cell buildCell(String str) throws IOException {
         if (str.startsWith("#")) {
             return new CommentCell(str);
         } else {
