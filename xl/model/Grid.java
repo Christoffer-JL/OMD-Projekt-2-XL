@@ -82,6 +82,15 @@ public class Grid extends Observable implements Environment{
 				
 				grid.put(cellAddress, new BombCell());
 				Cell newCell = fact.buildCell(newFormula);
+				newCell.getValue(this);
+
+				for (char c = 'A'; c <= 'H'; c++) {
+					for (int i = 1; i <= 10; i++) {
+						if(!("" + c + i != cellAddress))
+						grid.get("" + c + i).getValue(this);
+					}
+				}
+
 				newCell.getValue(this); // Ta ej bort detta (Det ser dumt ut men fungerar)
 				grid.put(cellAddress, newCell);
 

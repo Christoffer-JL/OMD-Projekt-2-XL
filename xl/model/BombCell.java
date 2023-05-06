@@ -6,17 +6,22 @@ public class BombCell implements Cell {
 
     @Override
     public double getValue(Environment e) {
-        throw new UnsupportedOperationException("You're not supposed to be here...");
+        throw new CircularReferenceException("Circular reference detected");
     }
 
     @Override
     public String getValueAsString(Environment e) {
-        throw new UnsupportedOperationException("You're not supposed to be here...");
+        throw new CircularReferenceException("Circular reference detected");
     }
 
     @Override
     public String getFormula() {
-        throw new UnsupportedOperationException("You're not supposed to be here...");
+        throw new CircularReferenceException("Circular reference detected");
     }
 
+    public static class CircularReferenceException extends RuntimeException {
+        public CircularReferenceException(String message) {
+            super(message);
+        }
+    }
 }

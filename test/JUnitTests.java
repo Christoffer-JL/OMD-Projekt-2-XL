@@ -7,11 +7,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
+import xl.model.BombCell;
 import xl.model.Grid;
+import xl.util.XLException;
 
 public class JUnitTests {
 
@@ -19,10 +21,13 @@ public class JUnitTests {
 
     @BeforeClass
     public static void setUp() throws IOException {
-
         System.setOut(new PrintStream(new ByteArrayOutputStream()));
         grid = new Grid();
+    }
 
+    @AfterClass
+    public static void tearDown() throws IOException {
+        grid = new Grid();
     }
 
     @Test
@@ -45,8 +50,32 @@ public class JUnitTests {
     public void testCircularReference() {
         grid.newFormula("A2", "A3");
         grid.newFormula("A1", "A2+3");
-        Exception exception = assertThrows(Exception.class, () -> grid.newFormula("A3", "A2+3"));
-        assertEquals("You're not supposed to be here...", exception.getMessage());
+        Exception exception = assertThrows(BombCell.CircularReferenceException.class, () -> {
+            grid.newFormula("A3", "A2+3");
+        });
+
+        assertEquals("Circular reference detected", exception.getMessage());
+   
+    }
+
+    @Test
+    public void testDivisionByZero() {
+
+        Exception exception = assertThrows(XLException.class, () -> {
+            grid.newFormula("B1", "1/0");
+        });
+
+        assertEquals("division by zero", exception.getMessage());
+
+
+        grid.newFormula("A2", "5/(A1+1)");
+         exception = assertThrows(XLException.class, () -> {
+            grid.newFormula("A1", "0-1");
+        });
+       
+        assertEquals("division by zero", exception.getMessage());
+
+
     }
 
 }
