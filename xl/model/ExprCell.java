@@ -32,12 +32,12 @@ public class ExprCell implements Cell {
 
     @Override
     public String getValueAsString(Environment env) {
-        return "";
+        return "" + expr.value(env);
     }
 
     @Override
     public String getFormula() {
-        return "";
+        return expr.toString();
     }
 
 }
