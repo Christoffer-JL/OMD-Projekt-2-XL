@@ -3,6 +3,7 @@ package xl.model;
 
 import xl.expr.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -68,8 +69,13 @@ public class Grid extends Observable implements Environment{
 	    public void newFormula(String cellAddress, String newFormula) {
 
 	    	//temp code för testning
-			ExprCell newCell = new ExprCell(newFormula);
-			grid.put(cellAddress, newCell);
+			CellFactory fact = new CellFactory();
+			try {
+				grid.put(cellAddress, fact.buildCell(newFormula)) ;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    	
 	    	
 	    }
@@ -108,7 +114,6 @@ public class Grid extends Observable implements Environment{
 
 		@Override
 		public double value(String name) {
-			System.out.println("sfsef " + name);
 			return grid.get(name).getValue(this);
 		}
 
