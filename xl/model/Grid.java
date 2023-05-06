@@ -9,7 +9,9 @@ import java.util.NoSuchElementException;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Grid extends Observable {
+import xl.expr.Environment;
+
+public class Grid extends Observable implements Environment{
 
 		private Map<String, Cell> grid;
 		
@@ -49,7 +51,8 @@ public class Grid extends Observable {
 	    	if(getCell(cellAddress) == null) {
 	    		throw new NoSuchElementException();
 	    	}
-	        return getCell(cellAddress).getValueAsString();
+	        return null;
+			//return getCell(cellAddress).getValueAsString();
 	    }
 
 	    
@@ -64,7 +67,9 @@ public class Grid extends Observable {
 	    
 	    public void newFormula(String cellAddress, String newFormula) {
 
-	    	
+	    	//temp code för testning
+			ExprCell newCell = new ExprCell(this, newFormula);
+			grid.put(cellAddress, newCell);
 	    	
 	    	
 	    }
@@ -99,5 +104,12 @@ public class Grid extends Observable {
 	    public void notifyObservers(Object o) {
 
 	    }
+
+
+		@Override
+		public double value(String name) {
+			System.out.println("sfsef " + name);
+			return grid.get(name).getValue(this);
+		}
 
 	}
