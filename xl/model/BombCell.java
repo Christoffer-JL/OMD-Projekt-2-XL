@@ -1,6 +1,6 @@
 package xl.model;
 
-import xl.expr.Environment;
+import xl.expr.*;
 
 public class BombCell implements Cell {
 

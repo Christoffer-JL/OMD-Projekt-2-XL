@@ -1,6 +1,7 @@
 
 package xl.model;
 
+import xl.expr.*;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +53,7 @@ public class Grid extends Observable {
 	    }
 
 	    
-	    public String formula(String cellAddress) {
+	    public String displayFormula(String cellAddress) {
 	    	if(getCell(cellAddress) == null) {
 	    		throw new NoSuchElementException();
 	    	}
