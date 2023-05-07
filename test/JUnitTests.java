@@ -1,18 +1,22 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import xl.model.BombCell;
 import xl.model.Grid;
+import xl.model.BombCell.CircularReferenceException;
 import xl.util.XLException;
 
 public class JUnitTests {
@@ -21,7 +25,7 @@ public class JUnitTests {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        System.setOut(new PrintStream(new ByteArrayOutputStream()));
+       // System.setOut(new PrintStream(new ByteArrayOutputStream()));
         grid = new Grid();
     }
 
@@ -50,33 +54,63 @@ public class JUnitTests {
     public void testCircularReference() throws IOException {
         grid.newFormula("A2", "A3");
         grid.newFormula("A1", "A2+3");
-        Exception exception = assertThrows(BombCell.CircularReferenceException.class, () -> {
-            grid.newFormula("A3", "A2+3");
-        });
 
-        assertEquals("Circular reference detected", exception.getMessage());
-   
+        try{
+            grid.newFormula("A3", "A2+3");
+            fail("No exception thrown");
+        }
+        catch(BombCell.CircularReferenceException e) {
+            assertEquals("Circular reference detected", e.getMessage());
+        }
     }
 
     @Test
     public void testDivisionByZero() throws IOException {
-        Exception exception = assertThrows(XLException.class, () -> {
-            grid.newFormula("B1", "1/0");
-        });
 
-        assertEquals("division by zero", exception.getMessage());
+        try {
+            grid.newFormula("B1", "1/0");
+            fail("No exception thrown");
+        }
+
+        catch(XLException e) {
+            assertEquals("division by zero", e.getMessage());
+        }
 
         grid.newFormula("B1", "0");
         grid.newFormula("A1", "1-A3");
         grid.newFormula("A2", "5/A1");
 
-         exception = assertThrows(XLException.class, () -> {
+        try {
             grid.newFormula("A3", "1");
-        });
-       
-        assertEquals("division by zero", exception.getMessage());
+            fail("No exception thrown");
+        }
+
+        catch(XLException e) {
+            assertEquals("division by zero", e.getMessage());
+        }
+
+        try {
+            grid.newFormula("A3", "1");
+            fail("No exception thrown");
+        }
+
+        catch(XLException e) {
+            assertEquals("division by zero", e.getMessage());
+        }
 
 
+    }
+
+    @Test
+    public void testCellReplacedAfterException() {
+
+        grid.newFormula("A1", "23");
+        try {
+        grid.newFormula("A1", "1/0");
+        fail("No exception thrown");
+        }
+        catch(Exception e) {}
+        assertEquals(23, grid.getCell("A1").getValue(grid), 0);
     }
 
 }

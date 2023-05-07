@@ -94,8 +94,12 @@ public class Grid extends Observable implements Environment{
 				}
 
 
-			} catch (IOException e) {
+			} catch (Exception e) {
 				grid.put(cellAddress, tempCell);
+
+				System.out.println(e.getMessage());
+
+				e.addSuppressed(e);
 				// Skicka felet vidare till GUIn sen...
 			}
 	    	
