@@ -17,6 +17,7 @@ public class Grid extends Observable implements Environment {
 
 	private Map<String, Cell> grid;
 	private CellFactory fact = new CellFactory();
+	private Cell selected = null;
 
 	public Grid() throws IOException {
 		grid = new HashMap<String, Cell>();
@@ -35,6 +36,14 @@ public class Grid extends Observable implements Environment {
 			return grid.get(cellAddress);
 		}
 		return null;
+	}
+
+	public void selectCell(String cellAddress){
+		selected=grid.get(cellAddress);
+	}
+
+	public Cell getSelectedCell(){
+		return selected;
 	}
 
 	public void clearAllCells() {
