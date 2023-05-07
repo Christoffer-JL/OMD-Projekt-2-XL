@@ -86,4 +86,22 @@ public class JUnitTests {
         assertEquals(23, grid.getCell("A1").getValue(grid), 0);
     }
 
+    @Test
+    public void insertGibberishCellValue() {
+
+        grid.newFormula("A1", "}\\61§lol");
+
+        assertEquals(0, grid.getCell("A1").getValue(grid), 0);
+
+    }
+
+    @Test
+    public void insertGibberishCellAddress() {
+
+        grid.newFormula("lol", "1");
+        grid.newFormula("S1", "1");
+        grid.newFormula("A11", "1");
+
+    }
+
 }
