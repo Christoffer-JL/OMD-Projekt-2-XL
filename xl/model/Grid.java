@@ -96,7 +96,6 @@ public class Grid extends Observable implements Environment {
 
 			System.out.println("div zero test..." + e.getMessage());
 
-			System.out.println("hej + " + tempCell.getFormula());
 			grid.put(cellAddress, tempCell);
 			// Skicka felet vidare till GUIn sen...
 		}
