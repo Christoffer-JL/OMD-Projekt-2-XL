@@ -11,6 +11,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import xl.expr.Environment;
+import xl.util.XLException;
 
 public class Grid extends Observable implements Environment{
 
@@ -76,7 +77,13 @@ public class Grid extends Observable implements Environment{
 	    
 	    public void newFormula(String cellAddress, String newFormula) {
 
-			Cell tempCell = grid.get(cellAddress);
+			Cell tempCell = null;
+			try {
+				tempCell = fact.buildCell(grid.get(cellAddress).getFormula());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			try {
 				
@@ -94,13 +101,25 @@ public class Grid extends Observable implements Environment{
 				}
 
 
-			} catch (Exception e) {
-				grid.put(cellAddress, tempCell);
+			} catch (XLException e) {
+				
 
-				System.out.println(e.getMessage());
+				System.out.println("div zero test..." + e.getMessage());
 
 				e.addSuppressed(e);
 				// Skicka felet vidare till GUIn sen...
+			}
+			
+			catch(BombCell.CircularReferenceException e) {
+				System.out.println("circ test..." + e.getMessage());
+			}
+
+			catch(Exception e) {
+				System.out.println("Unknown exception test... " + e.getMessage());
+			}
+
+			finally {
+				grid.put(cellAddress, tempCell);
 			}
 	    	
 	    	
