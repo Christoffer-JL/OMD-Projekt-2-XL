@@ -1,60 +1,148 @@
 
 package xl.model;
 
+import xl.expr.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Grid extends Observable {
+import xl.expr.Environment;
+import xl.util.XLException;
 
-    public Grid() {
+public class Grid extends Observable implements Environment {
 
-    }
+	private Map<String, Cell> grid;
+	private CellFactory fact = new CellFactory();
 
-    public Cell getCell(String cellAddress) {
-        return null;
-    }
+	public Grid() throws IOException {
+		grid = new HashMap<String, Cell>();
+		fact = new CellFactory();
 
-    public void clearAllCells() {
+		for (char c = 'A'; c <= 'H'; c++) {
+			for (int i = 1; i <= 10; i++) {
+				grid.put("" + c + i, fact.buildCell("0"));
+			}
+		}
 
-    }
+	}
 
-    public void clearCell(String cellAddress) {
+	public Cell getCell(String cellAddress) {
+		if (grid.containsKey(cellAddress)) {
+			return grid.get(cellAddress);
+		}
+		return null;
+	}
 
-    }
+	public void clearAllCells() {
+		grid.clear();
+		// not sure how observable should be implemeneted.. we should somehow notify GUI
+		// of the changes done
+		setChanged();
+		notifyObservers();
+	}
 
-    public String display(String cellAddress) {
-        return "";
-    }
+	public void clearCell(String cellAddress) {
+		if (grid.containsKey(cellAddress)) {
+			grid.remove(cellAddress);
+			setChanged();
+			notifyObservers();
+		}
+	}
 
-    public String formula(String cellAddress) {
-        return "";
-    }
+	public String display(String cellAddress) {
+		if (getCell(cellAddress) == null) {
+			throw new NoSuchElementException();
+		}
+		return null;
+		// return getCell(cellAddress).getValueAsString();
+	}
 
-    public void newFormula(String cellAddress, String newFormula) {
+	public String displayFormula(String cellAddress) {
+		if (getCell(cellAddress) == null) {
+			throw new NoSuchElementException();
+		}
+		return getCell(cellAddress).getFormula();
+	}
 
-    }
+	public void newFormula(String cellAddress, String newFormula) {
 
-    public void loadFile(String fileName) {
+		Cell tempCell = null;
+		try {
+			tempCell = fact.buildCell(grid.get(cellAddress).getFormula());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-    }
+		try {
 
-    public void saveFile(String fileName) {
+			grid.put(cellAddress, new BombCell());
+			Cell newCell = fact.buildCell(newFormula);
 
-    }
+			newCell.getValue(this); // Ta ej bort detta (Det ser dumt ut men fungerar)
+			grid.put(cellAddress, newCell);
 
-    @Override
-    public void addObserver(Observer ob) {
+			for (char c = 'A'; c <= 'H'; c++) {
+				for (int i = 1; i <= 10; i++) {
+					if (!("" + c + i).equals(cellAddress))
+						grid.get("" + c + i).getValue(this);
+				}
+			}
 
-    }
+		} catch (XLException e) {
 
-    @Override
-    public void setChanged() {
+			System.out.println("div zero test..." + e.getMessage());
 
-    }
+			System.out.println("hej + " + tempCell.getFormula());
+			grid.put(cellAddress, tempCell);
+			// Skicka felet vidare till GUIn sen...
+		}
 
-    @Override
-    public void notifyObservers(Object o) {
+		catch (BombCell.CircularReferenceException e) {
+			System.out.println("circ test..." + e.getMessage());
+			grid.put(cellAddress, tempCell);
+		}
 
-    }
+		catch (Exception e) {
+			System.out.println("Unknown exception test... " + e.getMessage());
+			grid.put(cellAddress, tempCell);
+		}
+
+	}
+
+	public void loadFile(String fileName) {
+		try {
+			XLBufferedReader loadfile = new XLBufferedReader(fileName);
+			loadfile.load(grid);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void saveFile(String fileName) {
+		try (XLPrintStream savefile = new XLPrintStream(fileName)) {
+			savefile.save(grid.entrySet());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void setChanged() {
+
+	}
+
+	@Override
+	public void notifyObservers(Object o) {
+
+	}
+
+	@Override
+	public double value(String name) {
+		return grid.get(name).getValue(this);
+	}
 
 }
