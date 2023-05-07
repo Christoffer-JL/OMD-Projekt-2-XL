@@ -48,7 +48,6 @@ public class JUnitTests {
     
     @Test
     public void testCircularReference() throws IOException {
-        grid = new Grid();
         grid.newFormula("A2", "A3");
         grid.newFormula("A1", "A2+3");
         Exception exception = assertThrows(BombCell.CircularReferenceException.class, () -> {
@@ -61,7 +60,6 @@ public class JUnitTests {
 
     @Test
     public void testDivisionByZero() throws IOException {
-    grid = new Grid();
         Exception exception = assertThrows(XLException.class, () -> {
             grid.newFormula("B1", "1/0");
         });
