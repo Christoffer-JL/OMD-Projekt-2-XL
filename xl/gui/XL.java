@@ -35,8 +35,8 @@ public class XL extends JFrame {
         }
         Controller controller = new Controller(grid);
         JPanel statusPanel = new StatusPanel(statusLabel, grid);
-        JPanel sheetPanel = new SheetPanel(ROWS, COLUMNS, controller);
-        Editor editor = new Editor();
+        JPanel sheetPanel = new SheetPanel(ROWS, COLUMNS, controller, grid);
+        Editor editor = new Editor(controller);
         add(NORTH, statusPanel);
         add(CENTER, editor);
         add(SOUTH, sheetPanel);

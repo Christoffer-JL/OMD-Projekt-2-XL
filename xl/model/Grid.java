@@ -17,7 +17,7 @@ public class Grid extends Observable implements Environment {
 
 	private Map<String, Cell> grid;
 	private CellFactory fact = new CellFactory();
-	private Cell selected = null;
+	private String selected = "A1";
 
 	public Grid() throws IOException {
 		grid = new HashMap<String, Cell>();
@@ -39,12 +39,16 @@ public class Grid extends Observable implements Environment {
 	}
 
 	public void selectCell(String cellAddress) {
-		selected = grid.get(cellAddress);
+		selected = cellAddress;
 		setChanged();
 		notifyObservers(cellAddress);
 	}
 
 	public Cell getSelectedCell() {
+		return grid.get(selected);
+	}
+
+	public String getSelectedCellAddress() {
 		return selected;
 	}
 
@@ -81,6 +85,11 @@ public class Grid extends Observable implements Environment {
 
 	public void newFormula(String cellAddress, String newFormula) {
 
+		System.out.println(cellAddress + " " + newFormula);
+
+		if (!(grid.containsKey(cellAddress))) // Fixa till notifikationer sen
+			return;
+
 		Cell tempCell = null;
 		try {
 			tempCell = fact.buildCell(grid.get(cellAddress).getFormula());
@@ -102,6 +111,9 @@ public class Grid extends Observable implements Environment {
 						grid.get("" + c + i).getValue(this);
 				}
 			}
+
+			setChanged();
+			notifyObservers(newCell.getValueAsString(this));
 
 		} catch (XLException e) {
 

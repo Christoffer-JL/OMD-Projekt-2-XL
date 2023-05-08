@@ -5,10 +5,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.SwingConstants;
 
-public class SlotLabels extends GridPanel {
+public class SlotLabels extends GridPanel implements Observer {
 
     private List<SlotLabel> labelList;
     private Controller controller;
@@ -44,6 +46,16 @@ public class SlotLabels extends GridPanel {
             currentLabel = label;
             currentLabel.setBackground(Color.YELLOW);
         }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (!(arg instanceof String))
+            return;
+
+        String newText = (String) arg;
+        currentLabel.setText(newText);
+
     }
 
 }

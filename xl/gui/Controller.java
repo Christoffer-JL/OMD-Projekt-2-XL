@@ -18,8 +18,12 @@ public class Controller {
 
     }
 
-    public void newFormula(String newFormula) {
+    private String getCurrentCellAddress() {
+        return grid.getSelectedCellAddress();
+    }
 
+    public void newFormula(String newFormula) {
+        grid.newFormula(getCurrentCellAddress(), newFormula);
     }
 
     public void changeFocus(String cellAddress) {
