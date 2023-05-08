@@ -12,24 +12,21 @@ public class SlotLabels extends GridPanel implements Observer {
 
     private List<SlotLabel> labelList;
 
-    private Controller c;
-
-    public SlotLabels(int rows, int cols, Controller c) {
+    public SlotLabels(int rows, int cols) {
         super(rows + 1, cols);
-        this.c = c;
         labelList = new ArrayList<SlotLabel>(rows * cols);
         for (char ch = 'A'; ch < 'A' + cols; ch++) {
             add(new ColoredLabel(Character.toString(ch), Color.LIGHT_GRAY, SwingConstants.CENTER));
         }
         for (int row = 1; row <= rows; row++) {
             for (char ch = 'A'; ch < 'A' + cols; ch++) {
-                SlotLabel label = new SlotLabel(c, "" + ch + row);
+                SlotLabel label = new SlotLabel();
                 add(label);
                 labelList.add(label);
             }
         }
         SlotLabel firstLabel = labelList.get(0);
-        c.changeFocus(firstLabel, "A1");
+        firstLabel.setBackground(Color.YELLOW);
     }
 
     @Override

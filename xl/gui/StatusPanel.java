@@ -5,9 +5,8 @@ import static java.awt.BorderLayout.WEST;
 
 public class StatusPanel extends BorderPanel {
 
-    protected StatusPanel(StatusLabel statusLabel, Controller c) {
+    protected StatusPanel(StatusLabel statusLabel) {
         CurrentLabel insertLabel = new CurrentLabel();
-        c.addObserver(insertLabel);
         add(WEST, insertLabel);
         add(CENTER, statusLabel);
     }

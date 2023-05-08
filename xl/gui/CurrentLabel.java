@@ -12,11 +12,6 @@ public class CurrentLabel extends ColoredLabel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (!(arg instanceof String))
-            return;
-
-        setText((String) arg);
-        System.out.print("Test");
     }
 
 }

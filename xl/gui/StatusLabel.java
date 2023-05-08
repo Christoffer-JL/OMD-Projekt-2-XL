@@ -6,14 +6,11 @@ import java.util.Observer;
 
 public class StatusLabel extends ColoredLabel implements Observer {
 
-    private Controller c;
-
-    public StatusLabel(Controller c) {
+    public StatusLabel() {
         super("", Color.WHITE);
-        this.c = c;
     }
 
     public void update(Observable observable, Object arg) {
-
+        setText("");
     }
 }
