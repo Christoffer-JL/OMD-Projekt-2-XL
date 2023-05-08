@@ -1,9 +1,13 @@
 package xl.gui;
 
+import xl.model.Grid;
+
 public class Controller {
 
-    public Controller() {
+    private Grid grid;
 
+    public Controller(Grid grid) {
+        this.grid = grid;
     }
 
     public void save() {
