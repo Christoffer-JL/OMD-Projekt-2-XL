@@ -22,8 +22,8 @@ public class Controller {
 
     }
 
-    public void changeFocus() {
-
+    public void changeFocus(String cellAddress) {
+        grid.selectCell(cellAddress);
     }
 
     public void statusUpdate() {

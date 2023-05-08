@@ -4,9 +4,12 @@ import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.NORTH;
 import static java.awt.BorderLayout.SOUTH;
 
+import java.io.IOException;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import xl.gui.menu.XLMenuBar;
+import xl.model.Grid;
 
 public class XL extends JFrame {
 
@@ -25,8 +28,14 @@ public class XL extends JFrame {
         this.counter = counter;
         xlList.add(this);
         counter.increment();
-        JPanel statusPanel = new StatusPanel(statusLabel);
-        JPanel sheetPanel = new SheetPanel(ROWS, COLUMNS);
+        Grid grid = null;
+        try {
+            grid = new Grid();
+        } catch (IOException e) {
+        }
+        Controller controller = new Controller(grid);
+        JPanel statusPanel = new StatusPanel(statusLabel, grid);
+        JPanel sheetPanel = new SheetPanel(ROWS, COLUMNS, controller);
         Editor editor = new Editor();
         add(NORTH, statusPanel);
         add(CENTER, editor);

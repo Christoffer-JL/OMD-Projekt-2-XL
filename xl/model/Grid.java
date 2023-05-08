@@ -38,11 +38,13 @@ public class Grid extends Observable implements Environment {
 		return null;
 	}
 
-	public void selectCell(String cellAddress){
-		selected=grid.get(cellAddress);
+	public void selectCell(String cellAddress) {
+		selected = grid.get(cellAddress);
+		setChanged();
+		notifyObservers(cellAddress);
 	}
 
-	public Cell getSelectedCell(){
+	public Cell getSelectedCell() {
 		return selected;
 	}
 
@@ -136,16 +138,6 @@ public class Grid extends Observable implements Environment {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void setChanged() {
-
-	}
-
-	@Override
-	public void notifyObservers(Object o) {
-
 	}
 
 	@Override
