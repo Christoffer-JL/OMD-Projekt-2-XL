@@ -30,8 +30,8 @@ public class Controller {
         grid.selectCell(cellAddress);
     }
 
-    public void statusUpdate() {
-
+    public void statusUpdate(String message) {
+        grid.statusUpdate(message);
     }
 
     public void clearAllCells() {

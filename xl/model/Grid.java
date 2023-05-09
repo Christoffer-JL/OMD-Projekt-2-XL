@@ -13,6 +13,7 @@ import java.util.Observer;
 import xl.expr.Environment;
 import xl.util.XLException;
 
+@SuppressWarnings("deprecation")
 public class Grid extends Observable implements Environment {
 
 	private Map<String, Cell> grid;
@@ -83,6 +84,11 @@ public class Grid extends Observable implements Environment {
 		return getCell(cellAddress).getFormula();
 	}
 
+	public void statusUpdate(String message) {
+		setChanged();
+		notifyObservers("Error: " + message);
+	}
+
 	public void newFormula(String cellAddress, String newFormula) {
 
 		// Om input-addressen inte finns, return (Ska ej kunna hända)
@@ -105,6 +111,7 @@ public class Grid extends Observable implements Environment {
 				newCell = fact.buildCell(newFormula);
 			} catch (IOException e) {
 				// notifiera GUI om fel i input newFormula
+				statusUpdate(e.getMessage());
 			}
 
 			// Värdet kollas för att upptäcka cirkulära referenser
@@ -128,6 +135,8 @@ public class Grid extends Observable implements Environment {
 
 		catch (Exception e) {
 			// Skicka e.getMessage() till statusLabel
+			statusUpdate(e.getMessage());
+
 			grid.put(cellAddress, tempCell);
 		}
 
