@@ -13,5 +13,6 @@ public class StatusPanel extends BorderPanel {
         add(CENTER, statusLabel);
 
         grid.addObserver(insertLabel);
+        grid.addObserver(statusLabel);
     }
 }
