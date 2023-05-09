@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import xl.model.Grid;
 
 import javax.swing.SwingConstants;
+
+import xl.model.Grid;
 
 public class SlotLabels extends GridPanel implements Observer {
 
@@ -60,11 +63,17 @@ public class SlotLabels extends GridPanel implements Observer {
     // jag ändrar detta sen /CJL
     @Override
     public void update(Observable o, Object arg) {
-        if (!(arg instanceof String))
+        if (!((String) arg).equals("updateSlotLabels"))
             return;
 
-        String newText = (String) arg;
-        currentLabel.setText(newText);
+        Grid g = (Grid) o;
+        System.out.println(g.getSelectedCellAddress());
+
+        for (SlotLabel lbl : labelList) {
+            String cellAddress = g.getCell(lbl.getAddress()).getValueAsString(g);
+            if (!(cellAddress.equals("0.0")))
+                lbl.setText(cellAddress);
+        }
 
     }
 
