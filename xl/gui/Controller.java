@@ -35,11 +35,11 @@ public class Controller {
     }
 
     public void clearAllCells() {
-
+        grid.clearAllCells();;
     }
 
     public void clearCells(String cellAddress) {
-
+        grid.clearCell(cellAddress);
     }
 
 }
