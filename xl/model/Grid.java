@@ -58,12 +58,16 @@ public class Grid extends Observable implements Environment {
 		return status;
 	}
 
-	public void clearAllCells() {
-		grid.clear();
-		// not sure how observable should be implemeneted.. we should somehow notify GUI
-		// of the changes done
-		setChanged();
-		notifyObservers();
+	public void clearAllCells() throws IOException {
+
+		for (char c = 'A'; c <= 'H'; c++) {
+			for (int i = 1; i <= 10; i++) {
+				newFormula("" + c + i, "0");
+			}
+		}
+		notifyObservers("updateSlotLabels");
+		statusUpdate("");
+
 	}
 
 	public void clearCell(String cellAddress) {

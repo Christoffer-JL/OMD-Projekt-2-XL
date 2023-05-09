@@ -1,5 +1,7 @@
 package xl.gui;
 
+import java.io.IOException;
+
 import xl.model.Grid;
 
 public class Controller {
@@ -34,8 +36,8 @@ public class Controller {
         grid.statusUpdate(message);
     }
 
-    public void clearAllCells() {
-        grid.clearAllCells();;
+    public void clearAllCells() throws IOException {
+        grid.clearAllCells();
     }
 
     public void clearCells(String cellAddress) {

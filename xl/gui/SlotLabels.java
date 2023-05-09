@@ -70,6 +70,8 @@ public class SlotLabels extends GridPanel implements Observer {
             String cellAddress = g.getCell(lbl.getAddress()).getValueAsString(g);
             if (!(cellAddress.equals("0.0")))
                 lbl.setText(cellAddress);
+            else
+                lbl.setText("");
         }
 
     }
