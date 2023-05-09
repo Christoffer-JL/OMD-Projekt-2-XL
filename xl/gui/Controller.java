@@ -12,12 +12,13 @@ public class Controller {
         this.grid = grid;
     }
 
-    public void save() {
+    public void save(String fileName) {
+        grid.saveFile(fileName);
 
     }
 
-    public void load() {
-
+    public void load(String fileName) {
+        grid.loadFile(fileName);
     }
 
     private String getCurrentCellAddress() {
