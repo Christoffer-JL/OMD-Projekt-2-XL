@@ -48,8 +48,10 @@ public class SlotLabels extends GridPanel implements Observer {
             controller.changeFocus(labelValue);
             currentLabel = label;
             currentLabel.setBackground(Color.YELLOW);
+            controller.statusUpdate("");
 
-            //controller.statusUpdate("");    //ska rensa eventuella statusmeddelanden, men detta blir galet
+            // controller.statusUpdate(""); //ska rensa eventuella statusmeddelanden, men
+            // detta blir galet
         }
     }
 

@@ -85,8 +85,12 @@ public class Grid extends Observable implements Environment {
 	}
 
 	public void statusUpdate(String message) {
+
+		if (message.length() > 0)
+			message = "Error: " + message;
+
 		setChanged();
-		notifyObservers("Error: " + message);
+		notifyObservers(message);
 	}
 
 	public void newFormula(String cellAddress, String newFormula) {
