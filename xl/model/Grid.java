@@ -71,11 +71,11 @@ public class Grid extends Observable implements Environment {
 	}
 
 	public void clearCell(String cellAddress) {
-		if (grid.containsKey(cellAddress)) {
-			grid.remove(cellAddress);
-			setChanged();
-			notifyObservers();
-		}
+		newFormula("" + cellAddress.charAt(0) + cellAddress.charAt(1), "0");
+		
+			notifyObservers("updateSlotLabels");
+			statusUpdate("");
+		
 	}
 
 	public String display(String cellAddress) {

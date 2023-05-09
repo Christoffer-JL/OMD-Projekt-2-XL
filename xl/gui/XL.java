@@ -40,7 +40,7 @@ public class XL extends JFrame {
         add(NORTH, statusPanel);
         add(CENTER, editor);
         add(SOUTH, sheetPanel);
-        setJMenuBar(new XLMenuBar(this, xlList, statusLabel, controller));
+        setJMenuBar(new XLMenuBar(this, xlList, statusLabel, controller, grid));
         pack();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
