@@ -141,6 +141,7 @@ public class Grid extends Observable implements Environment {
 			// Om inget fel upptäckts, notifieras alla SlotLabel-objek att uppdateras
 			setChanged();
 			notifyObservers("updateSlotLabels");
+			statusUpdate("");
 
 		}
 

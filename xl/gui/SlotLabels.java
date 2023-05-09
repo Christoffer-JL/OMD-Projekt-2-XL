@@ -59,8 +59,6 @@ public class SlotLabels extends GridPanel implements Observer {
     }
 
     // När någon formula i Grid uppdateras, kommer även varje label att uppdateras
-    // Jag har gjort fel här och det ska vara en loop som uppdaterar hela listan,
-    // jag ändrar detta sen /CJL
     @Override
     public void update(Observable o, Object arg) {
         if (!((String) arg).equals("updateSlotLabels"))
