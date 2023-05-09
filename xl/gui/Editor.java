@@ -10,12 +10,14 @@ import javax.swing.JTextField;
 
 public class Editor extends JTextField implements Observer {
 
-    Controller controller;
+    private Controller controller;
 
     public Editor(Controller controller) {
         setBackground(Color.WHITE);
         this.controller = controller;
 
+        // När användare trycker på Enter så skickas inmatat text till controllern och
+        // textfältet resetas till blankt
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

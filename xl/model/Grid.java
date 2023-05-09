@@ -85,11 +85,12 @@ public class Grid extends Observable implements Environment {
 
 	public void newFormula(String cellAddress, String newFormula) {
 
-		System.out.println(cellAddress + " " + newFormula);
-
-		if (!(grid.containsKey(cellAddress))) // Fixa till notifikationer sen
+		// Om input-addressen inte finns, return (Ska ej kunna hända)
+		if (!(grid.containsKey(cellAddress)))
 			return;
 
+		// tempCell kommer hålla det gamla värdet av cellen som ska ersättas. Om cellen
+		// ej kan ersätta pga exception så återställs cellen tillbaka till gammalt värde
 		Cell tempCell = null;
 		try {
 			tempCell = fact.buildCell(grid.get(cellAddress).getFormula());
@@ -98,13 +99,20 @@ public class Grid extends Observable implements Environment {
 		}
 
 		try {
-
+			Cell newCell = null;
 			grid.put(cellAddress, new BombCell());
-			Cell newCell = fact.buildCell(newFormula);
+			try {
+				newCell = fact.buildCell(newFormula);
+			} catch (IOException e) {
+				// notifiera GUI om fel i input newFormula
+			}
 
-			newCell.getValue(this); // Ta ej bort detta (Det ser dumt ut men fungerar)
+			// Värdet kollas för att upptäcka cirkulära referenser
+			newCell.getValue(this);
+			// Om cirkulära referenser ok, sätt in värdet i cellen
 			grid.put(cellAddress, newCell);
 
+			// Loop för att upptäcka division by zero
 			for (char c = 'A'; c <= 'H'; c++) {
 				for (int i = 1; i <= 10; i++) {
 					if (!("" + c + i).equals(cellAddress))
@@ -112,24 +120,14 @@ public class Grid extends Observable implements Environment {
 				}
 			}
 
+			// Om inget fel upptäckts, notifieras alla SlotLabel-objek att uppdateras
 			setChanged();
 			notifyObservers(newCell.getValueAsString(this));
 
-		} catch (XLException e) {
-
-			System.out.println("div zero test..." + e.getMessage());
-
-			grid.put(cellAddress, tempCell);
-			// Skicka felet vidare till GUIn sen...
-		}
-
-		catch (BombCell.CircularReferenceException e) {
-			System.out.println("circ test..." + e.getMessage());
-			grid.put(cellAddress, tempCell);
 		}
 
 		catch (Exception e) {
-			System.out.println("Unknown exception test... " + e.getMessage());
+			// Skicka e.getMessage() till statusLabel
 			grid.put(cellAddress, tempCell);
 		}
 

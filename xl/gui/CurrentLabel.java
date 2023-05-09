@@ -10,6 +10,8 @@ public class CurrentLabel extends ColoredLabel implements Observer {
         super("A1", Color.YELLOW);
     }
 
+    // Då currentCell uppdateras i Grid skickas denna uppdatering hit med addressen
+    // som parameter
     @Override
     public void update(Observable o, Object arg) {
 
