@@ -19,6 +19,6 @@ public class StatusLabel extends ColoredLabel implements Observer {
 
         Grid g = (Grid) o;
 
-        setText(g.getStatus());
+        setText(g.getStatus()); // :)
     }
 }
