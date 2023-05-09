@@ -7,6 +7,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JTextField;
+import xl.model.Grid;
+
+import java.time.LocalDateTime;
 
 public class Editor extends JTextField implements Observer {
 
@@ -23,7 +26,6 @@ public class Editor extends JTextField implements Observer {
             public void actionPerformed(ActionEvent e) {
                 String newFormula = getText();
                 controller.newFormula(newFormula);
-                setText("");
             }
         });
 
@@ -31,6 +33,11 @@ public class Editor extends JTextField implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+         if (!((String) arg).equals("updateSelectedCell")) {
+             return;
+         }
+         Grid g = (Grid) o;
+         setText(g.displayFormula(g.getSelectedCellAddress()));
     }
 
 }
