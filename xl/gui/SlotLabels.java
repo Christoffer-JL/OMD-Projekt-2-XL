@@ -67,7 +67,6 @@ public class SlotLabels extends GridPanel implements Observer {
             return;
 
         Grid g = (Grid) o;
-        System.out.println(g.getSelectedCellAddress());
 
         for (SlotLabel lbl : labelList) {
             String cellAddress = g.getCell(lbl.getAddress()).getValueAsString(g);

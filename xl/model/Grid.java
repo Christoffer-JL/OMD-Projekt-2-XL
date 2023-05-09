@@ -19,6 +19,7 @@ public class Grid extends Observable implements Environment {
 	private Map<String, Cell> grid;
 	private CellFactory fact = new CellFactory();
 	private String selected = "A1";
+	private String status = "";
 
 	public Grid() throws IOException {
 		grid = new HashMap<String, Cell>();
@@ -42,7 +43,7 @@ public class Grid extends Observable implements Environment {
 	public void selectCell(String cellAddress) {
 		selected = cellAddress;
 		setChanged();
-		notifyObservers(cellAddress);
+		notifyObservers("updateSelectedCell");
 	}
 
 	public Cell getSelectedCell() {
@@ -51,6 +52,10 @@ public class Grid extends Observable implements Environment {
 
 	public String getSelectedCellAddress() {
 		return selected;
+	}
+
+	public String getStatus() {
+		return status;
 	}
 
 	public void clearAllCells() {
@@ -89,8 +94,10 @@ public class Grid extends Observable implements Environment {
 		if (message.length() > 0)
 			message = "Error: " + message;
 
+		this.status = message;
+
 		setChanged();
-		notifyObservers(message);
+		notifyObservers("updateStatus");
 	}
 
 	public void newFormula(String cellAddress, String newFormula) {

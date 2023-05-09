@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.Observable;
 import java.util.Observer;
 
+import xl.model.Grid;
+
 public class CurrentLabel extends ColoredLabel implements Observer {
 
     public CurrentLabel() {
@@ -15,10 +17,11 @@ public class CurrentLabel extends ColoredLabel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
 
-        if (!(arg instanceof String))
+        if (!((String) arg).equals("updateSelectedCell"))
             return;
 
-        setText(arg.toString());
+        Grid g = (Grid) o;
+        setText(g.getSelectedCellAddress());
 
     }
 
