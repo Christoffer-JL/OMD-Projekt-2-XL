@@ -16,7 +16,6 @@ import org.junit.Test;
 
 import xl.model.BombCell;
 import xl.model.Grid;
-import xl.model.BombCell.CircularReferenceException;
 import xl.util.XLException;
 
 public class JUnitTests {

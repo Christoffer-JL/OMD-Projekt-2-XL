@@ -72,10 +72,10 @@ public class Grid extends Observable implements Environment {
 
 	public void clearCell(String cellAddress) {
 		newFormula("" + cellAddress.charAt(0) + cellAddress.charAt(1), "0");
-		
-			notifyObservers("updateSlotLabels");
-			statusUpdate("");
-		
+
+		notifyObservers("updateSlotLabels");
+		statusUpdate("");
+
 	}
 
 	public String display(String cellAddress) {
@@ -159,11 +159,20 @@ public class Grid extends Observable implements Environment {
 	}
 
 	public void loadFile(String fileName) {
+		XLBufferedReader loadfile = null;
 		try {
-			XLBufferedReader loadfile = new XLBufferedReader(fileName);
+			loadfile = new XLBufferedReader(fileName);
 			loadfile.load(grid);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				loadfile.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			setChanged();
+			notifyObservers("updateSlotLabels");
 		}
 	}
 
