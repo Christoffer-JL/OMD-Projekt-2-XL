@@ -16,7 +16,7 @@ class SaveMenuItem extends OpenMenuItem {
     }
 
     protected void action(String path) throws FileNotFoundException {
-        controller.save(path);
+        controller.save(path+".xl");
     }
 
     protected int openDialog(JFileChooser fileChooser) {

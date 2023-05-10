@@ -23,7 +23,7 @@ public class XLBufferedReader extends BufferedReader {
             while (ready()) {
                 String string = readLine();
                 int i = string.indexOf('=');
-                map.put(string.substring(0, i), factory.buildCell(string.substring(i, string.length())));
+                map.put(string.substring(0,i), factory.buildCell(string.substring(i,string.length())));
             }
         } catch (Exception e) {
             throw new XLException(e.getMessage());
