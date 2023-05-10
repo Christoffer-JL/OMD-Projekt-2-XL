@@ -17,7 +17,6 @@ public class XLBufferedReader extends BufferedReader {
 
     // TODO Change Object to something appropriate
     public void load(Map<String, Cell> map) {
-        System.out.println("sg");
         try {
             while (ready()) {
                 String string = readLine();
