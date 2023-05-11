@@ -63,14 +63,16 @@ public class SlotLabels extends GridPanel implements Observer {
     public void update(Observable o, Object arg) {
         if (!((String) arg).equals("updateSlotLabels"))
             return;
-
+        ;
         Grid g = (Grid) o;
 
         for (SlotLabel lbl : labelList) {
-            String cellAddress = g.getCell(lbl.getAddress()).getValueAsString(g);
-            if (!(cellAddress.equals("0.0")))
+
+            if (!(g.getCell(lbl.getAddress()) == null)) {
+                String cellAddress = g.getCell(lbl.getAddress()).getValueAsString(g);
+
                 lbl.setText(cellAddress);
-            else
+            } else
                 lbl.setText("");
         }
 

@@ -25,12 +25,6 @@ public class Grid extends Observable implements Environment {
 		grid = new HashMap<String, Cell>();
 		fact = new CellFactory();
 
-		for (char c = 'A'; c <= 'H'; c++) {
-			for (int i = 1; i <= 10; i++) {
-				grid.put("" + c + i, fact.buildCell("0"));
-			}
-		}
-
 	}
 
 	public Cell getCell(String cellAddress) {
@@ -62,17 +56,19 @@ public class Grid extends Observable implements Environment {
 
 		for (char c = 'A'; c <= 'H'; c++) {
 			for (int i = 1; i <= 10; i++) {
-				newFormula("" + c + i, "0");
+				grid.remove("" + c + i);
 			}
 		}
+		setChanged();
 		notifyObservers("updateSlotLabels");
 		statusUpdate("");
 
 	}
 
 	public void clearCell(String cellAddress) {
-		newFormula("" + cellAddress.charAt(0) + cellAddress.charAt(1), "0");
+		grid.remove(cellAddress);
 
+		setChanged();
 		notifyObservers("updateSlotLabels");
 		statusUpdate("");
 
@@ -80,7 +76,7 @@ public class Grid extends Observable implements Environment {
 
 	public String display(String cellAddress) {
 		if (getCell(cellAddress) == null) {
-			throw new NoSuchElementException();
+			return "";
 		}
 		return null;
 		// return getCell(cellAddress).getValueAsString();
@@ -88,7 +84,7 @@ public class Grid extends Observable implements Environment {
 
 	public String displayFormula(String cellAddress) {
 		if (getCell(cellAddress) == null) {
-			throw new NoSuchElementException();
+			return "";
 		}
 		return getCell(cellAddress).getFormula();
 	}
@@ -106,17 +102,20 @@ public class Grid extends Observable implements Environment {
 
 	public void newFormula(String cellAddress, String newFormula) {
 
-		// Om input-addressen inte finns, return (Ska ej kunna hända)
-		if (!(grid.containsKey(cellAddress)))
-			return;
-
 		// tempCell kommer hålla det gamla värdet av cellen som ska ersättas. Om cellen
 		// ej kan ersätta pga exception så återställs cellen tillbaka till gammalt värde
 		Cell tempCell = null;
-		try {
-			tempCell = fact.buildCell(grid.get(cellAddress).getFormula());
-		} catch (IOException e) {
-			e.printStackTrace();
+
+		if (grid.containsKey(cellAddress)) {
+			try {
+				tempCell = fact.buildCell(grid.get(cellAddress).getFormula());
+			} catch (IOException e) {
+			}
+		}
+
+		if (newFormula.isBlank()) {
+			clearCell(cellAddress);
+			return;
 		}
 
 		try {
@@ -137,11 +136,11 @@ public class Grid extends Observable implements Environment {
 			// Loop för att upptäcka division by zero
 			for (char c = 'A'; c <= 'H'; c++) {
 				for (int i = 1; i <= 10; i++) {
-					if (!("" + c + i).equals(cellAddress))
+					if ((!("" + c + i).equals(cellAddress)) && grid.containsKey("" + c + i))
 						grid.get("" + c + i).getValue(this);
+
 				}
 			}
-
 			// Om inget fel upptäckts, notifieras alla SlotLabel-objek att uppdateras
 			setChanged();
 			notifyObservers("updateSlotLabels");
@@ -151,9 +150,14 @@ public class Grid extends Observable implements Environment {
 
 		catch (Exception e) {
 			// Skicka e.getMessage() till statusLabel
-			statusUpdate(e.getMessage());
 
-			grid.put(cellAddress, tempCell);
+			if (tempCell != null)
+				grid.put(cellAddress, tempCell);
+
+			else
+				clearCell(cellAddress);
+
+			statusUpdate(e.getMessage());
 		}
 
 	}
@@ -172,7 +176,10 @@ public class Grid extends Observable implements Environment {
 				e.printStackTrace();
 			}
 			setChanged();
+			notifyObservers("updateSelectedCell");
+			setChanged();
 			notifyObservers("updateSlotLabels");
+
 		}
 	}
 
@@ -186,7 +193,10 @@ public class Grid extends Observable implements Environment {
 
 	@Override
 	public double value(String name) {
-		return grid.get(name).getValue(this);
+		if (grid.containsKey(name))
+			return grid.get(name).getValue(this);
+		else
+			return 0;
 	}
 
 }
