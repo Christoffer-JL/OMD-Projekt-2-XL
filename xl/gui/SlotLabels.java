@@ -8,11 +8,9 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import xl.model.Grid;
-
 import javax.swing.SwingConstants;
 
-import xl.model.Grid;
-
+@SuppressWarnings("deprecation")
 public class SlotLabels extends GridPanel implements Observer {
 
     private List<SlotLabel> labelList;

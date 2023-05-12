@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 
+@SuppressWarnings("deprecation")
 public class XLList extends Observable implements Iterable<XL> {
 
     private List<XL> list = new ArrayList<XL>();

@@ -2,9 +2,9 @@ package xl.gui;
 
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.WEST;
-
 import xl.model.Grid;
 
+@SuppressWarnings("deprecation")
 public class SheetPanel extends BorderPanel {
 
     public SheetPanel(int rows, int columns, Controller controller, Grid grid, Editor editor) {

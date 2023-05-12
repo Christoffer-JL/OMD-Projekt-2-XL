@@ -16,7 +16,7 @@ class ClearAllMenuItem extends JMenuItem implements ActionListener {
         super("Clear all");
         addActionListener(this);
         this.controller = controller;
-        this.editor=editor;
+        this.editor = editor;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -24,7 +24,6 @@ class ClearAllMenuItem extends JMenuItem implements ActionListener {
             controller.clearAllCells();
             editor.setText(null);
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
     }

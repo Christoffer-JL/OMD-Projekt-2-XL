@@ -1,7 +1,6 @@
 package xl.gui;
 
 import java.io.IOException;
-
 import xl.model.Grid;
 
 public class Controller {

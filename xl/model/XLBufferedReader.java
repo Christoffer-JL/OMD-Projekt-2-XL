@@ -15,9 +15,9 @@ public class XLBufferedReader extends BufferedReader {
         factory = new CellFactory();
     }
 
-    // TODO Change Object to something appropriate
     public void load(Map<String, Cell> map) {
         try {
+
             while (ready()) {
                 String string = readLine();
                 int i = string.indexOf('=') + 1;

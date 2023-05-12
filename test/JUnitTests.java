@@ -1,22 +1,11 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.fail;
-
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
-
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import xl.model.BombCell;
 import xl.model.Grid;
-import xl.util.XLException;
 
 public class JUnitTests {
 

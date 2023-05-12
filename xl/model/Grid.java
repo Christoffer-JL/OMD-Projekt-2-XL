@@ -1,17 +1,13 @@
 
 package xl.model;
 
-import xl.expr.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Observable;
-import java.util.Observer;
 
 import xl.expr.Environment;
-import xl.util.XLException;
 
 @SuppressWarnings("deprecation")
 public class Grid extends Observable implements Environment {
@@ -163,24 +159,26 @@ public class Grid extends Observable implements Environment {
 	}
 
 	public void loadFile(String fileName) {
+
 		XLBufferedReader loadfile = null;
 		try {
 			loadfile = new XLBufferedReader(fileName);
+			clearAllCells();
 			loadfile.load(grid);
+			loadfile.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				loadfile.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			status = "Invalid file name";
 			setChanged();
-			notifyObservers("updateSelectedCell");
-			setChanged();
-			notifyObservers("updateSlotLabels");
+			notifyObservers("updateStatus");
+
+		} catch (IOException ie) {
 
 		}
+		setChanged();
+		notifyObservers("updateSelectedCell");
+		setChanged();
+		notifyObservers("updateSlotLabels");
+
 	}
 
 	public void saveFile(String fileName) {

@@ -6,6 +6,7 @@ import java.util.Observer;
 
 import xl.model.Grid;
 
+@SuppressWarnings("deprecation")
 public class CurrentLabel extends ColoredLabel implements Observer {
 
     public CurrentLabel() {
@@ -21,7 +22,6 @@ public class CurrentLabel extends ColoredLabel implements Observer {
             return;
 
         Grid g = (Grid) o;
-        System.out.print(g.getSelectedCell() + "   " + g.getSelectedCellAddress());
         setText(g.getSelectedCellAddress());
 
     }
