@@ -70,8 +70,6 @@ public class Grid extends Observable implements Environment {
 
 	}
 
-	
-
 	public String displayFormula(String cellAddress) {
 		if (getCell(cellAddress) == null) {
 			return "";
